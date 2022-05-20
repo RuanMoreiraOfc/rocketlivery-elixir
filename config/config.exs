@@ -10,6 +10,10 @@ import Config
 config :rocketlivery,
   ecto_repos: [Rocketlivery.Repo]
 
+config :rocketlivery, Rocketlivery.Repo,
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
 # Configures the endpoint
 config :rocketlivery, RocketliveryWeb.Endpoint,
   url: [host: "localhost"],
