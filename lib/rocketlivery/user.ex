@@ -16,6 +16,7 @@ defmodule Rocketlivery.User do
     :address,
     :cep
   ]
+  @derive {Jason.Encoder, only: [:id, :email, :name, :age, :cpf, :address, :cep]}
 
   schema "users" do
     field :email, :string
