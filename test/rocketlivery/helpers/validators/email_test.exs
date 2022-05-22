@@ -16,6 +16,7 @@ defmodule Rocketlivery.Helpers.Validators.EmailTest do
       expected_response = []
 
       response_list = [
+        # local
         "email@email.email",
         "emai.l@email.email",
         "ema.i.l@email.email",
@@ -23,12 +24,14 @@ defmodule Rocketlivery.Helpers.Validators.EmailTest do
         "ema-i-l@email.email",
         "emai--l@email.email",
         "ema--i--l@email.email",
+        # domain
         "email@e.mail.email",
         "email@e.m.ail.email",
         "email@e-mail.email",
         "email@e--mail.email",
         "email@e-m-ail.email",
         "email@e--m--ail.email",
+        # tld
         "email@email.e-mail",
         "email@email.e--mail",
         "email@email.e-m-ail",
@@ -42,6 +45,7 @@ defmodule Rocketlivery.Helpers.Validators.EmailTest do
       expected_response = []
 
       response_list = [
+        # local
         "-email@email.email",
         "email-@email.email",
         ".email@email.email",
@@ -49,6 +53,7 @@ defmodule Rocketlivery.Helpers.Validators.EmailTest do
         "emai..l@email.email",
         "emai.-l@email.email",
         "emai-.l@email.email",
+        # domain
         "email@-email.email",
         "email@email-.email",
         "email@.email.email",
@@ -56,6 +61,7 @@ defmodule Rocketlivery.Helpers.Validators.EmailTest do
         "email@emai..l.email",
         "email@emai.-l.email",
         "email@emai-.l.email",
+        # tld
         "email@email.-email",
         "email@email.email-"
       ]
