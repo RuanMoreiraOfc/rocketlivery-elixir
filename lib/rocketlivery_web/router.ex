@@ -7,6 +7,8 @@ defmodule RocketliveryWeb.Router do
 
   scope "/api", RocketliveryWeb do
     pipe_through :api
+
+    resources "/users", UsersController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development
