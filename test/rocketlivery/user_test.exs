@@ -45,7 +45,8 @@ defmodule Rocketlivery.UserTest do
       params = build(:user_params)
 
       new_params = %{
-        password: "12378945"
+        # From web always come as `key => value` notation
+        "password" => "12378945"
       }
 
       %Changeset{changes: %{password_hash: old_password_hash}} =
@@ -53,11 +54,10 @@ defmodule Rocketlivery.UserTest do
 
       expected_response = true
 
-      %Changeset{changes: %{password_hash: _response}} = User.changeset(changeset, new_params)
+      %Changeset{changes: %{password_hash: response}} = User.changeset(changeset, new_params)
 
       assert Pbkdf2.verify_pass(params.password, old_password_hash) == expected_response
-      # FIXME: For some reason it fails!
-      # assert Pbkdf2.verify_pass(new_params.password, response) == expected_response
+      assert Pbkdf2.verify_pass(new_params["password"], response) == expected_response
     end
   end
 end
