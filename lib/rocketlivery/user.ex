@@ -53,7 +53,7 @@ defmodule Rocketlivery.User do
     |> validate_required(fields)
     # email
     |> validate_format(:email, EmailValidatorHelper.regex())
-    |> validate_length(:email, less_than_or_equal_to: 320)
+    |> validate_length(:email, max: 320)
     |> unique_constraint([:email])
     # password
     |> validate_length(:password, min: 8, max: 40)
