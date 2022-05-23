@@ -16,6 +16,7 @@ defmodule Rocketlivery.User do
     :cep
   ]
   @required_params [:password] ++ @displyabale_params
+  @update_params [] ++ @displyabale_params
   @derive {Jason.Encoder, only: [:id] ++ @displyabale_params}
 
   schema "users" do
@@ -33,8 +34,23 @@ defmodule Rocketlivery.User do
 
   def changeset(params) do
     %__MODULE__{}
-    |> cast(params, @required_params)
-    |> validate_required(@required_params)
+    |> build_changeset(params, @required_params)
+  end
+
+  def changeset(struct, %{"password" => _password} = params) do
+    struct
+    |> build_changeset(params, @required_params)
+  end
+
+  def changeset(struct, params) do
+    struct
+    |> build_changeset(params, @update_params)
+  end
+
+  defp build_changeset(struct, params, fields) do
+    struct
+    |> cast(params, fields)
+    |> validate_required(fields)
     # email
     |> validate_format(:email, EmailValidatorHelper.regex())
     |> validate_length(:email, less_than_or_equal_to: 320)
