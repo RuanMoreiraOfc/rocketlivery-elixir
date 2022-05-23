@@ -3,6 +3,7 @@ defmodule Rocketlivery.Users.CreateTest do
 
   import Rocketlivery.Factory
 
+  alias Rocketlivery.Helpers.Error
   alias Rocketlivery.User
   alias Rocketlivery.Users.Create
 
@@ -13,6 +14,14 @@ defmodule Rocketlivery.Users.CreateTest do
       response = Create.call(params)
 
       assert {:ok, %User{id: _id}} = response
+    end
+
+    test "fails to create an user in database when any param is invalid" do
+      params = build(:user_params, age: 17)
+
+      response = Create.call(params)
+
+      assert {:error, %Error{status: :bad_request, result: _result}} = response
     end
   end
 end
