@@ -103,5 +103,36 @@ defmodule Rocketlivery.UserTest do
       assert Pbkdf2.verify_pass(params.password, old_password_hash) == expected_response
       assert Pbkdf2.verify_pass(new_params["password"], response) == expected_response
     end
+
+    test "fails to update a existing changeset when all new params are invalid" do
+      params = build(:user_params)
+
+      # From web always come as `key => value` notation
+      new_params = %{
+        "email" => nil,
+        "password" => String.duplicate("0", 41),
+        "name" => nil,
+        "age" => nil,
+        "cpf" => nil,
+        "address" => nil,
+        "cep" => nil
+      }
+
+      changeset = User.changeset(params)
+
+      expected_response = %{
+        address: ["can't be blank"],
+        age: ["can't be blank"],
+        cep: ["can't be blank"],
+        cpf: ["can't be blank"],
+        email: ["can't be blank"],
+        name: ["can't be blank"],
+        password: ["should be at most 40 character(s)"]
+      }
+
+      response = User.changeset(changeset, new_params)
+
+      assert errors_on(response) == expected_response
+    end
   end
 end
