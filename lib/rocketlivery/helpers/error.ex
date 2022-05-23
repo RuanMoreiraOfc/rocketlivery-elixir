@@ -33,9 +33,4 @@ defmodule Rocketlivery.Helpers.Error do
     "User not found!"
     |> build_not_found()
   end
-
-  def build_id_format_error do
-    "Invalid `id` format!"
-    |> build_bad_request()
-  end
 end
