@@ -69,6 +69,22 @@ defmodule Rocketlivery.UserTest do
       assert %Changeset{valid?: true, changes: %{name: "Not Anny One"}} = response
     end
 
+    test "fails to update a changeset when cpf is invalid" do
+      params = build(:user_params)
+
+      new_params = %{
+        cpf: "1234567890"
+      }
+
+      changeset = User.changeset(params)
+
+      expected_response = %{cpf: ["should be 11 character(s)"]}
+
+      response = User.changeset(changeset, new_params)
+
+      assert errors_on(response) == expected_response
+    end
+
     test "updates the password from a existing changeset when new password is valid" do
       params = build(:user_params)
 
@@ -86,22 +102,6 @@ defmodule Rocketlivery.UserTest do
 
       assert Pbkdf2.verify_pass(params.password, old_password_hash) == expected_response
       assert Pbkdf2.verify_pass(new_params["password"], response) == expected_response
-    end
-
-    test "fails to update a changeset when cpf is invalid" do
-      params = build(:user_params)
-
-      new_params = %{
-        cpf: "1234567890"
-      }
-
-      changeset = User.changeset(params)
-
-      expected_response = %{cpf: ["should be 11 character(s)"]}
-
-      response = User.changeset(changeset, new_params)
-
-      assert errors_on(response) == expected_response
     end
   end
 end
