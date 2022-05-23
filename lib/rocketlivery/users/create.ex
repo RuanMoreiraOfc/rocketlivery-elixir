@@ -1,4 +1,5 @@
 defmodule Rocketlivery.Users.Create do
+  alias Rocketlivery.Helpers.Error, as: ErrorHelper
   alias Rocketlivery.{Repo, User}
 
   def call(params) do
@@ -11,6 +12,8 @@ defmodule Rocketlivery.Users.Create do
   defp handle_insert_response({:ok, %User{}} = result), do: result
 
   defp handle_insert_response({:error, result}) do
-    {:error, %{status: :bad_request, result: result}}
+    result
+    |> ErrorHelper.build_bad_request()
+    |> ErrorHelper.wrap()
   end
 end
