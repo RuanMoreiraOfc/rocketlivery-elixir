@@ -1,20 +1,14 @@
 defmodule Rocketlivery.UserTest do
   use Rocketlivery.DataCase, async: true
 
+  import Rocketlivery.Factory
+
   alias Ecto.Changeset
   alias Rocketlivery.User
 
   describe "changeset/1" do
     test "creates a changeset when all params are valid" do
-      params = %{
-        email: "anyone@email.com",
-        password: "12345678",
-        address: "St Anywhere",
-        name: "Anny One",
-        age: 24,
-        cpf: "12345678907",
-        cep: "12345678"
-      }
+      params = build(:user_params)
 
       response = User.changeset(params)
 
@@ -22,15 +16,7 @@ defmodule Rocketlivery.UserTest do
     end
 
     test "fails to create a changeset when email is in invalid format" do
-      params = %{
-        email: "anyone@.email.com",
-        password: "12345678",
-        address: "St Anywhere",
-        name: "Anny One",
-        age: 24,
-        cpf: "12345678907",
-        cep: "12345678"
-      }
+      params = build(:user_params, email: "invalid-email")
 
       expected_response = %{email: ["has invalid format"]}
 
@@ -42,15 +28,7 @@ defmodule Rocketlivery.UserTest do
 
   describe "changeset/2" do
     test "updates a existing changeset when new params are valid" do
-      params = %{
-        email: "anyone@email.com",
-        password: "12345678",
-        address: "St Anywhere",
-        name: "Anny One",
-        age: 24,
-        cpf: "12345678907",
-        cep: "12345678"
-      }
+      params = build(:user_params)
 
       new_params = %{
         name: "Not Anny One"
@@ -64,15 +42,7 @@ defmodule Rocketlivery.UserTest do
     end
 
     test "updates the password from a existing changeset when new password is valid" do
-      params = %{
-        email: "anyone@email.com",
-        password: "12345678",
-        address: "St Anywhere",
-        name: "Anny One",
-        age: 24,
-        cpf: "12345678907",
-        cep: "12345678"
-      }
+      params = build(:user_params)
 
       new_params = %{
         password: "12378945"
