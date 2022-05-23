@@ -24,6 +24,34 @@ defmodule Rocketlivery.UserTest do
 
       assert errors_on(response) == expected_response
     end
+
+    test "fails to create a changeset when all parmas are invalid" do
+      params =
+        build(
+          :user_params,
+          email: "#{String.duplicate("3", 320 - 63 + 1)}@#{String.duplicate("2", 63 - 4)}.111",
+          password: "123",
+          name: nil,
+          age: 17,
+          cpf: "000",
+          address: nil,
+          cep: "123"
+        )
+
+      expected_response = %{
+        address: ["can't be blank"],
+        age: ["must be greater than or equal to 18"],
+        cep: ["should be 8 character(s)"],
+        cpf: ["should be 11 character(s)"],
+        email: ["should be at most 320 character(s)"],
+        name: ["can't be blank"],
+        password: ["should be at least 8 character(s)"]
+      }
+
+      response = User.changeset(params)
+
+      assert errors_on(response) == expected_response
+    end
   end
 
   describe "changeset/2" do
