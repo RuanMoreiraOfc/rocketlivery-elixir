@@ -20,6 +20,24 @@ defmodule Rocketlivery.UserTest do
 
       assert %Changeset{valid?: true, changes: %{name: "Anny One"}} = response
     end
+
+    test "fails to create a changeset when email is in invalid format" do
+      params = %{
+        email: "anyone@.email.com",
+        password: "12345678",
+        address: "St Anywhere",
+        name: "Anny One",
+        age: 24,
+        cpf: "12345678907",
+        cep: "12345678"
+      }
+
+      expected_response = %{email: ["has invalid format"]}
+
+      response = User.changeset(params)
+
+      assert errors_on(response) == expected_response
+    end
   end
 
   describe "changeset/2" do
