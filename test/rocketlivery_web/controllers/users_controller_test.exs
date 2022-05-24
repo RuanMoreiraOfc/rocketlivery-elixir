@@ -40,5 +40,16 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"user" => %{"id" => ^id}} = response
     end
+
+    test "fails to delete the user via `conn` when id has not been found", %{conn: conn} do
+      id = "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3"
+
+      response =
+        conn
+        |> delete(Routes.users_path(conn, :delete, id))
+        |> json_response(:not_found)
+
+      assert %{"message" => "User not found!"} = response
+    end
   end
 end
