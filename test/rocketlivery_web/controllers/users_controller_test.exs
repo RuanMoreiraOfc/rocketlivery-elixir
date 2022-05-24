@@ -78,4 +78,23 @@ defmodule RocketliveryWeb.UsersControllerTest do
       assert %{"message" => "User not found!"} = response
     end
   end
+
+  describe "update/2" do
+    test "updates the user via `conn` when id has been found", %{conn: conn} do
+      id = "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3"
+
+      new_params = %{
+        "age" => 84
+      }
+
+      insert(:user, id: id)
+
+      response =
+        conn
+        |> put(Routes.users_path(conn, :update, id, new_params))
+        |> json_response(:ok)
+
+      assert %{"user" => %{"id" => ^id, "age" => 84}} = response
+    end
+  end
 end
