@@ -25,4 +25,22 @@ defmodule RocketliveryWeb.UsersViewTest do
              }
            } = response
   end
+
+  test "renders user.json" do
+    user = build(:user, age: 19)
+
+    response = render(UsersView, "user.json", user: user)
+
+    assert %{
+             user: %User{
+               id: "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3",
+               email: "anyone@email.com",
+               name: "Anny One",
+               age: 19,
+               cpf: "12345678900",
+               address: "St Anywhere",
+               cep: "05030030"
+             }
+           } = response
+  end
 end
