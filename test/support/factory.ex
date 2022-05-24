@@ -1,5 +1,5 @@
 defmodule Rocketlivery.Factory do
-  use ExMachina
+  use ExMachina.Ecto
 
   def user_params_factory do
     %{
