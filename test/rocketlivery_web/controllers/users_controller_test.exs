@@ -66,5 +66,16 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"user" => %{"id" => ^id}} = response
     end
+
+    test "fails to show the user via `conn` when id has not been found", %{conn: conn} do
+      id = "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3"
+
+      response =
+        conn
+        |> get(Routes.users_path(conn, :show, id))
+        |> json_response(:not_found)
+
+      assert %{"message" => "User not found!"} = response
+    end
   end
 end
