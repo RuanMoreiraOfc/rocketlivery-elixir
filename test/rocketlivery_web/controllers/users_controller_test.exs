@@ -14,5 +14,16 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"message" => "User created!", "user" => %{}} = response
     end
+
+    test "fails to create the user via `conn` when any param is invalid", %{conn: conn} do
+      params = string_params_for(:user_params, age: 17)
+
+      response =
+        conn
+        |> post(Routes.users_path(conn, :create, params))
+        |> json_response(:bad_request)
+
+      assert %{"message" => %{"age" => ["must be greater than or equal to 18"]}} = response
+    end
   end
 end
