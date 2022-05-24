@@ -26,4 +26,19 @@ defmodule RocketliveryWeb.UsersControllerTest do
       assert %{"message" => %{"age" => ["must be greater than or equal to 18"]}} = response
     end
   end
+
+  describe "delete/2" do
+    test "deletes the user via `conn` when id has been found", %{conn: conn} do
+      id = "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3"
+
+      insert(:user, id: id)
+
+      response =
+        conn
+        |> delete(Routes.users_path(conn, :delete, id))
+        |> json_response(:ok)
+
+      assert %{"user" => %{"id" => ^id}} = response
+    end
+  end
 end
