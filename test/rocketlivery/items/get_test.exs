@@ -3,6 +3,7 @@ defmodule Rocketlivery.Items.GetTest do
 
   import Rocketlivery.Factory
 
+  alias Rocketlivery.Helpers.Error
   alias Rocketlivery.Item
   alias Rocketlivery.Items.Get
 
@@ -14,5 +15,14 @@ defmodule Rocketlivery.Items.GetTest do
 
       assert {:ok, %Item{id: ^id}} = response
     end
+  end
+
+  test "fails to get an item by id from database when id is invalid" do
+    %{id: id_from_database} = insert(:item)
+    id = String.replace(id_from_database, ~r/.$/, &if(&1 == "0", do: "1", else: "0"))
+
+    response = Get.by_id(id)
+
+    assert {:error, %Error{status: :not_found, result: _result}} = response
   end
 end
