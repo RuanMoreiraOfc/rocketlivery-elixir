@@ -31,12 +31,33 @@ defmodule RocketliveryWeb.ErrorView do
   end
 
   defp translate_errors(changeset) do
-    traverse_errors(changeset, fn {msg, opts} ->
-      Regex.replace(~r/%{(\w+)}/, msg, fn _, key ->
-        opts
-        |> Keyword.get(String.to_existing_atom(key), key)
-        |> to_string()
-      end)
+    traverse_errors(changeset, &parse_error_to_message/1)
+  end
+
+  defp parse_error_to_message(
+         {_msg,
+          [
+            type: {
+              :parameterized,
+              Ecto.Enum,
+              %{mappings: optionsTupleList}
+            },
+            validation: :cast
+          ]} = error
+       ) do
+    core_msg = get_core_msg(error)
+    valid_options = Enum.map_join(optionsTupleList, ", ", &"'#{elem(&1, 1)}'")
+
+    "#{core_msg}, valid options are: [#{valid_options}]"
+  end
+
+  defp parse_error_to_message(error), do: get_core_msg(error)
+
+  defp get_core_msg({msg, opts}) do
+    Regex.replace(~r/%{(\w+)}/, msg, fn _, key ->
+      opts
+      |> Keyword.get(String.to_existing_atom(key), key)
+      |> to_string()
     end)
   end
 end
