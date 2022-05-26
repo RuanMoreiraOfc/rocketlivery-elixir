@@ -7,7 +7,7 @@ defmodule Rocketlivery.User do
   alias Rocketlivery.Helpers.Validators.Email, as: EmailValidatorHelper
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @displyabale_params [
+  @displayable_params [
     :email,
     :name,
     :age,
@@ -15,9 +15,9 @@ defmodule Rocketlivery.User do
     :address,
     :cep
   ]
-  @required_params [:password] ++ @displyabale_params
-  @update_params [] ++ @displyabale_params
-  @derive {Jason.Encoder, only: [:id] ++ @displyabale_params}
+  @required_params [:password] ++ @displayable_params
+  @update_params [] ++ @displayable_params
+  @derive {Jason.Encoder, only: [:id] ++ @displayable_params}
 
   schema "users" do
     field :email, :string
