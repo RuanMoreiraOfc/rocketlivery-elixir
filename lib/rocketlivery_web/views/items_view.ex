@@ -9,4 +9,6 @@ defmodule RocketliveryWeb.ItemsView do
       item: item
     }
   end
+
+  def render("item.json", %{item: %Item{} = item}), do: %{item: item}
 end
