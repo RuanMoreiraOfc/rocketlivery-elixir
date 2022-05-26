@@ -27,4 +27,14 @@ defmodule Rocketlivery.Factory do
       cep: "05030030"
     }
   end
+
+  def item_params_factory do
+    %{
+      category: :drink,
+      name: "Apple Juice",
+      description: "Juice made of apples",
+      price: Decimal.new("2.5") |> Decimal.to_float(),
+      photo: "/priv/static/assets/image.jpg"
+    }
+  end
 end
