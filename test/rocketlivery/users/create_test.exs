@@ -9,7 +9,7 @@ defmodule Rocketlivery.Users.CreateTest do
 
   describe "call/1" do
     test "creates an user in database when all params are valid" do
-      params = build(:user_params)
+      params = string_params_for(:user_params)
 
       response = Create.call(params)
 
@@ -17,7 +17,7 @@ defmodule Rocketlivery.Users.CreateTest do
     end
 
     test "fails to create an user in database when any param is invalid" do
-      params = build(:user_params, age: 17)
+      params = string_params_for(:user_params, age: 17)
 
       response = Create.call(params)
 
