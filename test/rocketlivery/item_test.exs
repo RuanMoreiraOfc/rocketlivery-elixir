@@ -51,5 +51,31 @@ defmodule Rocketlivery.ItemTest do
 
       assert %Changeset{valid?: true, changes: %{description: "A new description!"}} = response
     end
+
+    test "fails to update a changeset when all params are invalid" do
+      params = string_params_for(:item_params)
+
+      new_params = %{
+        "category" => nil,
+        "name" => 100,
+        "description" => 100,
+        "price" => nil,
+        "photo" => 42
+      }
+
+      expected_response = %{
+        category: ["can't be blank"],
+        name: ["is invalid"],
+        description: ["is invalid"],
+        price: ["can't be blank"],
+        photo: ["is invalid"]
+      }
+
+      changeset = Item.changeset(params)
+
+      response = Item.changeset(changeset, new_params)
+
+      assert errors_on(response) == expected_response
+    end
   end
 end
