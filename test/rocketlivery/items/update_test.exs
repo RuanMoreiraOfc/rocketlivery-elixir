@@ -3,6 +3,7 @@ defmodule Rocketlivery.Items.UpdateTest do
 
   import Rocketlivery.Factory
 
+  alias Ecto.Changeset
   alias Rocketlivery.Item
   alias Rocketlivery.Items.Update
 
@@ -15,6 +16,15 @@ defmodule Rocketlivery.Items.UpdateTest do
       response = Update.call(new_params)
 
       assert {:ok, %Item{id: ^id, price: ^price}} = response
+    end
+
+    test "fails to update an item in database when any param is invalid" do
+      %{id: id} = insert(:item)
+      new_params = %{"id" => id, "price" => 0}
+
+      response = Update.call(new_params)
+
+      assert {:error, %Changeset{errors: _errors}} = response
     end
   end
 end
