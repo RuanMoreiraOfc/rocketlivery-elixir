@@ -33,4 +33,9 @@ defmodule Rocketlivery.Helpers.Error do
     "User not found!"
     |> build_not_found()
   end
+
+  def build_item_not_found_error do
+    "Item not found!"
+    |> build_not_found()
+  end
 end
