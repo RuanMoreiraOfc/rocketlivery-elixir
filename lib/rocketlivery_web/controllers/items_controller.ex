@@ -13,4 +13,12 @@ defmodule RocketliveryWeb.ItemsController do
       |> render("create.json", item: item)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    with {:ok, %Item{} = item} <- Rocketlivery.delete_item(id) do
+      conn
+      |> put_status(:ok)
+      |> render("item.json", item: item)
+    end
+  end
 end
