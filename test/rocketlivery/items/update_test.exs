@@ -4,6 +4,7 @@ defmodule Rocketlivery.Items.UpdateTest do
   import Rocketlivery.Factory
 
   alias Ecto.Changeset
+  alias Rocketlivery.Helpers.Error
   alias Rocketlivery.Item
   alias Rocketlivery.Items.Update
 
@@ -25,6 +26,16 @@ defmodule Rocketlivery.Items.UpdateTest do
       response = Update.call(new_params)
 
       assert {:error, %Changeset{errors: _errors}} = response
+    end
+
+    test "fails to update an item in database when id is invalid" do
+      %{id: id_from_database} = insert(:item)
+      id = String.replace(id_from_database, ~r/.$/, &if(&1 == "0", do: "1", else: "0"))
+      new_params = %{"id" => id}
+
+      response = Update.call(new_params)
+
+      assert {:error, %Error{status: :not_found, result: _result}} = response
     end
   end
 end
