@@ -21,4 +21,12 @@ defmodule RocketliveryWeb.ItemsController do
       |> render("item.json", item: item)
     end
   end
+
+  def show(conn, %{"id" => id}) do
+    with {:ok, %Item{} = item} <- Rocketlivery.get_item_by_id(id) do
+      conn
+      |> put_status(:ok)
+      |> render("item.json", item: item)
+    end
+  end
 end
