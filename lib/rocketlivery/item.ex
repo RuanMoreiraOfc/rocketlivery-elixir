@@ -4,8 +4,10 @@ defmodule Rocketlivery.Item do
   import Ecto.Changeset
 
   alias Ecto.Enum
+  alias Rocketlivery.Order
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   @required_params [
     :category,
     :name,
@@ -18,6 +20,8 @@ defmodule Rocketlivery.Item do
   @category_enum [:food, :drink, :desert]
 
   schema "items" do
+    many_to_many :orders, Order, join_through: "orders_items"
+
     field :category, Enum, values: @category_enum
     field :name, :string
     field :description, :string
