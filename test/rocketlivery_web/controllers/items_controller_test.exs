@@ -56,4 +56,19 @@ defmodule RocketliveryWeb.ItemsControllerTest do
       assert %{"message" => "Item not found!"} = response
     end
   end
+
+  describe "show/2" do
+    test "shows the item via `conn` when id has been found", %{conn: conn} do
+      id = "7c6576f9-9161-4bba-8b94-d997c6d0f4a1"
+
+      insert(:item, id: id)
+
+      response =
+        conn
+        |> get(Routes.items_path(conn, :show, id))
+        |> json_response(:ok)
+
+      assert %{"item" => %{"id" => ^id}} = response
+    end
+  end
 end
