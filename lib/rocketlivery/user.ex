@@ -5,6 +5,7 @@ defmodule Rocketlivery.User do
 
   alias Ecto.Changeset
   alias Rocketlivery.Helpers.Validators.Email, as: EmailValidatorHelper
+  alias Rocketlivery.Order
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @displayable_params [
@@ -20,6 +21,8 @@ defmodule Rocketlivery.User do
   @derive {Jason.Encoder, only: [:id] ++ @displayable_params}
 
   schema "users" do
+    has_many :orders, Order
+
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
