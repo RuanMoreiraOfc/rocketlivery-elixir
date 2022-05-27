@@ -25,4 +25,22 @@ defmodule RocketliveryWeb.ItemsViewTest do
              }
            } = response
   end
+
+  test "renders item.json" do
+    price = Decimal.new("10") |> Decimal.to_float()
+    item = build(:item, price: price)
+
+    response = render(ItemsView, "item.json", item: item)
+
+    assert %{
+             item: %Item{
+               id: "7c6576f9-9161-4bba-8b94-d997c6d0f4a1",
+               category: :drink,
+               name: "Apple Juice",
+               description: "Juice made of apples",
+               price: ^price,
+               photo: "/priv/static/assets/image.jpg"
+             }
+           } = response
+  end
 end
