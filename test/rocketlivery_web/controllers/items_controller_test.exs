@@ -30,4 +30,19 @@ defmodule RocketliveryWeb.ItemsControllerTest do
              } = response
     end
   end
+
+  describe "delete/2" do
+    test "deletes the item via `conn` when id has been found", %{conn: conn} do
+      id = "7c6576f9-9161-4bba-8b94-d997c6d0f4a1"
+
+      insert(:item, id: id)
+
+      response =
+        conn
+        |> delete(Routes.items_path(conn, :delete, id))
+        |> json_response(:ok)
+
+      assert %{"item" => %{"id" => ^id}} = response
+    end
+  end
 end
