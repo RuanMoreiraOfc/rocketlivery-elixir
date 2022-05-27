@@ -82,4 +82,23 @@ defmodule RocketliveryWeb.ItemsControllerTest do
       assert %{"message" => "Item not found!"} = response
     end
   end
+
+  describe "update/2" do
+    test "updates the item via `conn` when id has been found", %{conn: conn} do
+      id = "7c6576f9-9161-4bba-8b94-d997c6d0f4a1"
+
+      new_params = %{
+        "price" => 84
+      }
+
+      insert(:item, id: id)
+
+      response =
+        conn
+        |> put(Routes.items_path(conn, :update, id, new_params))
+        |> json_response(:ok)
+
+      assert %{"item" => %{"id" => ^id, "price" => "84"}} = response
+    end
+  end
 end
