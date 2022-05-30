@@ -29,4 +29,12 @@ defmodule RocketliveryWeb.OrdersController do
       |> render("order.json", order: order)
     end
   end
+
+  def update(conn, params) do
+    with {:ok, %Order{} = order} <- Rocketlivery.update_order(params) do
+      conn
+      |> put_status(:ok)
+      |> render("order.json", order: order)
+    end
+  end
 end
