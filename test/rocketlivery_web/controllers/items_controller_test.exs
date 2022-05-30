@@ -25,7 +25,7 @@ defmodule RocketliveryWeb.ItemsControllerTest do
 
       assert %{
                "message" => %{
-                 "category" => ["is invalid, valid options are: ['food', 'drink', 'desert']"]
+                 "category" => ["is invalid, valid options are: ['food', 'drink', 'dessert']"]
                }
              } = response
     end

@@ -17,7 +17,7 @@ defmodule Rocketlivery.Item do
   ]
   @derive {Jason.Encoder, only: [:id] ++ @required_params}
 
-  @category_enum [:food, :drink, :desert]
+  @category_enum [:food, :drink, :dessert]
 
   schema "items" do
     many_to_many :orders, Order, join_through: "orders_items"
