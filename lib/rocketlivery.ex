@@ -4,6 +4,8 @@ defmodule Rocketlivery do
   alias Rocketlivery.Items.Get, as: ItemGet
   alias Rocketlivery.Items.Update, as: ItemUpdate
 
+  alias Rocketlivery.Orders.Create, as: OrderCreate
+
   alias Rocketlivery.Users.Create, as: UserCreate
   alias Rocketlivery.Users.Delete, as: UserDelete
   alias Rocketlivery.Users.Get, as: UserGet
@@ -18,4 +20,6 @@ defmodule Rocketlivery do
   defdelegate delete_item(id), to: ItemDelete, as: :call
   defdelegate get_item_by_id(id), to: ItemGet, as: :by_id
   defdelegate update_item(params), to: ItemUpdate, as: :call
+
+  defdelegate create_order(params), to: OrderCreate, as: :call
 end
