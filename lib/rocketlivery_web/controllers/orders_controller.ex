@@ -21,4 +21,12 @@ defmodule RocketliveryWeb.OrdersController do
       |> render("order.json", order: order)
     end
   end
+
+  def show(conn, %{"id" => id}) do
+    with {:ok, %Order{} = order} <- Rocketlivery.get_order_by_id(id) do
+      conn
+      |> put_status(:ok)
+      |> render("order.json", order: order)
+    end
+  end
 end
