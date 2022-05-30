@@ -38,4 +38,9 @@ defmodule Rocketlivery.Helpers.Error do
     "Item not found!"
     |> build_not_found()
   end
+
+  def build_order_not_found_error do
+    "Order not found!"
+    |> build_not_found()
+  end
 end
