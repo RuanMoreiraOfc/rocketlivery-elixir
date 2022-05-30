@@ -9,4 +9,6 @@ defmodule RocketliveryWeb.OrdersView do
       order: order
     }
   end
+
+  def render("order.json", %{order: %Order{} = order}), do: %{order: order}
 end
