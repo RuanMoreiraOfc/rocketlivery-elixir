@@ -6,6 +6,7 @@ defmodule Rocketlivery do
 
   alias Rocketlivery.Orders.Create, as: OrderCreate
   alias Rocketlivery.Orders.Delete, as: OrderDelete
+  alias Rocketlivery.Orders.Get, as: OrderGet
 
   alias Rocketlivery.Users.Create, as: UserCreate
   alias Rocketlivery.Users.Delete, as: UserDelete
@@ -24,4 +25,5 @@ defmodule Rocketlivery do
 
   defdelegate create_order(params), to: OrderCreate, as: :call
   defdelegate delete_order(id), to: OrderDelete, as: :call
+  defdelegate get_order_by_id(id), to: OrderGet, as: :by_id
 end
