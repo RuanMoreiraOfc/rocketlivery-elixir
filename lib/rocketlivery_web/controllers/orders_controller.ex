@@ -13,4 +13,12 @@ defmodule RocketliveryWeb.OrdersController do
       |> render("create.json", order: order)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    with {:ok, %Order{} = order} <- Rocketlivery.delete_order(id) do
+      conn
+      |> put_status(:ok)
+      |> render("order.json", order: order)
+    end
+  end
 end
