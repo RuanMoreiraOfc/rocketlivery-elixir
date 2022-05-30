@@ -7,7 +7,7 @@ defmodule Rocketlivery.Items.GetTest do
   alias Rocketlivery.Item
   alias Rocketlivery.Items.Get
 
-  describe "call/1" do
+  describe "by_id/1" do
     test "gets an item by id from database when id is valid" do
       %{id: id} = insert(:item)
 

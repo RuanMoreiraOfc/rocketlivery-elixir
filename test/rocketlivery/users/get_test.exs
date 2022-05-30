@@ -7,7 +7,7 @@ defmodule Rocketlivery.Users.GetTest do
   alias Rocketlivery.User
   alias Rocketlivery.Users.Get
 
-  describe "call/1" do
+  describe "by_id/1" do
     test "gets an user by id from database when id is valid" do
       %{id: id} = insert(:user)
 
