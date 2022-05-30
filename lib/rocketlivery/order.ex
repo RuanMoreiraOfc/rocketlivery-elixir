@@ -19,7 +19,10 @@ defmodule Rocketlivery.Order do
   @payment_method_enum [:money, :credit_card, :debit_card]
 
   schema "orders" do
-    many_to_many :items, Item, join_through: "orders_items", on_delete: :delete_all
+    many_to_many :items, Item,
+      join_through: "orders_items",
+      on_replace: :delete,
+      on_delete: :delete_all
 
     belongs_to :user, User
     field :address, :string
