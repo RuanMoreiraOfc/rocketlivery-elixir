@@ -25,7 +25,11 @@ defmodule Rocketlivery.Items.UpdateTest do
 
       response = Update.call(new_params)
 
-      assert {:error, %Changeset{errors: _errors}} = response
+      assert {:error,
+              %Error{
+                status: :bad_request,
+                result: %Changeset{errors: _errors}
+              }} = response
     end
 
     test "fails to update an item in database when id is invalid" do

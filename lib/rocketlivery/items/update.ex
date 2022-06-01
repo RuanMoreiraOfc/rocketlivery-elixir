@@ -17,5 +17,14 @@ defmodule Rocketlivery.Items.Update do
     item
     |> Item.changeset(params)
     |> Repo.update()
+    |> handle_update_response()
   end
+
+  defp handle_update_response({:error, reason}) do
+    reason
+    |> ErrorHelper.build_bad_request()
+    |> ErrorHelper.wrap()
+  end
+
+  defp handle_update_response({:ok, %Item{}} = result), do: result
 end

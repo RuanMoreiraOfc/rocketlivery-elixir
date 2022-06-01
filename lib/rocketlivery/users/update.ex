@@ -17,5 +17,14 @@ defmodule Rocketlivery.Users.Update do
     user
     |> User.changeset(params)
     |> Repo.update()
+    |> handle_update_response()
   end
+
+  defp handle_update_response({:error, reason}) do
+    reason
+    |> ErrorHelper.build_bad_request()
+    |> ErrorHelper.wrap()
+  end
+
+  defp handle_update_response({:ok, %User{}} = result), do: result
 end
