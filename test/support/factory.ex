@@ -1,7 +1,7 @@
 defmodule Rocketlivery.Factory do
   use ExMachina.Ecto, repo: Rocketlivery.Repo
 
-  alias Rocketlivery.{Item, User}
+  alias Rocketlivery.{Item, Order, User}
 
   def user_params_factory do
     %{
@@ -57,6 +57,19 @@ defmodule Rocketlivery.Factory do
           id: insert(:item).id,
           quantity: 1
         }
+      ],
+      address: "St anywhere",
+      payment_method: :money,
+      notes: "no sugar"
+    }
+  end
+
+  def order_factory do
+    %Order{
+      id: "4b9eb78b-a91f-4e6c-bda4-01b462f946ff",
+      user_id: insert(:user).id,
+      items: [
+        build(:item)
       ],
       address: "St anywhere",
       payment_method: :money,
