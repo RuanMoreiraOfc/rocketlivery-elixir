@@ -43,4 +43,9 @@ defmodule Rocketlivery.Helpers.Error do
     "Order not found!"
     |> build_not_found()
   end
+
+  def build_cep_not_found_error do
+    "CEP not found!"
+    |> build_not_found()
+  end
 end
