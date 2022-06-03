@@ -54,4 +54,19 @@ defmodule RocketliveryWeb.OrdersControllerTest do
       assert %{"message" => "Order not found!"} = response
     end
   end
+
+  describe "show/2" do
+    test "shows the order via `conn` when id has been found", %{conn: conn} do
+      id = "4b9eb78b-a91f-4e6c-bda4-01b462f946ff"
+
+      insert(:order, id: id)
+
+      response =
+        conn
+        |> get(Routes.orders_path(conn, :show, id))
+        |> json_response(:ok)
+
+      assert %{"order" => %{"id" => ^id}} = response
+    end
+  end
 end
