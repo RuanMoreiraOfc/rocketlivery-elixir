@@ -3,6 +3,7 @@ defmodule Rocketlivery.Orders.CreateTest do
 
   import Rocketlivery.Factory
 
+  alias Rocketlivery.Helpers.Error
   alias Rocketlivery.Order
   alias Rocketlivery.Orders.Create
 
@@ -13,6 +14,14 @@ defmodule Rocketlivery.Orders.CreateTest do
       response = Create.call(params)
 
       assert {:ok, %Order{id: _id}} = response
+    end
+
+    test "fails to create an order in database when any param is invalid" do
+      params = string_params_for(:order_params, user_id: nil)
+
+      response = Create.call(params)
+
+      assert {:error, %Error{status: :bad_request, result: _result}} = response
     end
   end
 end
