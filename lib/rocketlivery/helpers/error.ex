@@ -48,4 +48,9 @@ defmodule Rocketlivery.Helpers.Error do
     "CEP not found!"
     |> build_not_found()
   end
+
+  def build_cep_bad_request_error do
+    "Invalid CEP!"
+    |> build_bad_request()
+  end
 end
