@@ -37,5 +37,20 @@ defmodule Rocketlivery.OrderTest do
 
       assert errors_on(response) == expected_response
     end
+
+    test "updates a changeset when all params are valid" do
+      item = build(:item)
+      params = string_params_for(:order_params)
+
+      new_params = %{
+        "address" => "New address!"
+      }
+
+      changeset = Order.changeset(params, [item])
+
+      response = Order.changeset(changeset, new_params, [item])
+
+      assert %Changeset{valid?: true, changes: %{address: "New address!"}} = response
+    end
   end
 end
