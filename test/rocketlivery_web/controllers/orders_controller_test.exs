@@ -42,5 +42,16 @@ defmodule RocketliveryWeb.OrdersControllerTest do
 
       assert %{"order" => %{"id" => ^id}} = response
     end
+
+    test "fails to delete the order via `conn` when id has not been found", %{conn: conn} do
+      id = "4b9eb78b-a91f-4e6c-bda4-01b462f946ff"
+
+      response =
+        conn
+        |> delete(Routes.orders_path(conn, :delete, id))
+        |> json_response(:not_found)
+
+      assert %{"message" => "Order not found!"} = response
+    end
   end
 end
