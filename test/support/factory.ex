@@ -48,4 +48,19 @@ defmodule Rocketlivery.Factory do
       photo: "/priv/static/assets/image.jpg"
     }
   end
+
+  def order_params_factory do
+    %{
+      user_id: insert(:user).id,
+      items: [
+        %{
+          id: insert(:item).id,
+          quantity: 1
+        }
+      ],
+      address: "St anywhere",
+      payment_method: :money,
+      notes: "no sugar"
+    }
+  end
 end
