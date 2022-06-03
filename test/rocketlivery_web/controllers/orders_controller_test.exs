@@ -98,5 +98,20 @@ defmodule RocketliveryWeb.OrdersControllerTest do
 
       assert %{"order" => %{"id" => ^id, "notes" => "no notes"}} = response
     end
+
+    test "fails to update the order via `conn` when id has not been found", %{conn: conn} do
+      id = "4b9eb78b-a91f-4e6c-bda4-01b462f946ff"
+
+      new_params = %{
+        "notes" => "no notes"
+      }
+
+      response =
+        conn
+        |> put(Routes.orders_path(conn, :update, id, new_params))
+        |> json_response(:not_found)
+
+      assert %{"message" => "Order not found!"} = response
+    end
   end
 end
