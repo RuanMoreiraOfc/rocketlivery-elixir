@@ -15,5 +15,27 @@ defmodule Rocketlivery.OrderTest do
 
       assert %Changeset{valid?: true, changes: %{payment_method: :money}} = response
     end
+
+    test "fails to create a changeset when all params are invalid" do
+      params =
+        string_params_for(:order_params,
+          user_id: nil,
+          address: nil,
+          notes: nil,
+          payment_method: :invalid_category
+        )
+
+      expected_response = %{
+        user_id: ["can't be blank"],
+        address: ["can't be blank"],
+        items: ["is invalid"],
+        notes: ["can't be blank"],
+        payment_method: ["is invalid"]
+      }
+
+      response = Order.changeset(params, [nil])
+
+      assert errors_on(response) == expected_response
+    end
   end
 end
