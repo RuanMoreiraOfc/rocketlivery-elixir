@@ -91,5 +91,25 @@ defmodule Rocketlivery.ViaCep.ClientTest do
 
       assert reponse == expect_response
     end
+
+    test "fails to return cep info when something fail during the request", %{
+      bypass: bypass,
+      base_url: base_url
+    } do
+      cep = "05030030"
+
+      expect_response = {
+        :error,
+        %ErrorHelper{
+          status: :bad_request,
+          result: :econnrefused
+        }
+      }
+
+      Bypass.down(bypass)
+      reponse = Client.get_cep_info(base_url, cep)
+
+      assert reponse == expect_response
+    end
   end
 end
