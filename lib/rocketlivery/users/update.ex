@@ -3,7 +3,7 @@ defmodule Rocketlivery.Users.Update do
   alias Rocketlivery.Helpers.MergeChangeset, as: MergeChangesetHelper
   alias Rocketlivery.Helpers.MockUserParams, as: MockUserParamsHelper
   alias Rocketlivery.{Repo, User}
-  alias Rocketlivery.ViaCep.{Client, Response}
+  alias Rocketlivery.ViaCep.Response
 
   def call(%{"id" => id} = params) do
     case Repo.get(User, id) do
@@ -44,11 +44,17 @@ defmodule Rocketlivery.Users.Update do
   end
 
   defp update_cep_info(cep, user) when user.cep != cep do
-    Client.get_cep_info(cep)
+    client().get_cep_info(cep)
   end
 
   defp update_cep_info(_cep, user) do
     result = Response.build(user.city, user.uf)
     {:ok, result}
+  end
+
+  defp client do
+    :rocketlivery
+    |> Application.fetch_env!(__MODULE__)
+    |> Keyword.get(:via_cep_adapter)
   end
 end
