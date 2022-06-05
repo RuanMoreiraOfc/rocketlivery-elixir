@@ -24,7 +24,9 @@ defmodule Rocketlivery.Factory do
       name: "Anny One",
       age: 24,
       cpf: "12345678900",
-      cep: "05030030"
+      cep: "05030030",
+      city: "São Paulo",
+      uf: "SP"
     }
   end
 

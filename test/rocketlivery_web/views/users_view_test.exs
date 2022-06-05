@@ -21,7 +21,9 @@ defmodule RocketliveryWeb.UsersViewTest do
                age: 24,
                cpf: "12345678900",
                address: "St Anywhere",
-               cep: "05030030"
+               cep: "05030030",
+               city: "São Paulo",
+               uf: "SP"
              }
            } = response
   end
@@ -39,7 +41,9 @@ defmodule RocketliveryWeb.UsersViewTest do
                age: 19,
                cpf: "12345678900",
                address: "St Anywhere",
-               cep: "05030030"
+               cep: "05030030",
+               city: "São Paulo",
+               uf: "SP"
              }
            } = response
   end
