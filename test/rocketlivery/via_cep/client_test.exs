@@ -2,6 +2,7 @@ defmodule Rocketlivery.ViaCep.ClientTest do
   use ExUnit.Case, async: true
 
   alias Plug.Conn
+  alias Rocketlivery.Helpers.Error, as: ErrorHelper
   alias Rocketlivery.ViaCep.{Client, Response}
 
   describe "get_cep_info/1" do
@@ -32,6 +33,30 @@ defmodule Rocketlivery.ViaCep.ClientTest do
         conn
         |> Conn.put_resp_content_type("application/json")
         |> Conn.resp(200, expect_body)
+      end)
+
+      reponse = Client.get_cep_info(base_url, cep)
+
+      assert reponse == expect_response
+    end
+
+    test "fails to return cep info when `cep` is invalid", %{
+      bypass: bypass,
+      base_url: base_url
+    } do
+      cep = "123"
+
+      expect_response = {
+        :error,
+        %ErrorHelper{
+          status: :bad_request,
+          result: "Invalid CEP!"
+        }
+      }
+
+      Bypass.expect(bypass, "GET", "#{cep}/json/", fn conn ->
+        conn
+        |> Conn.resp(400, "")
       end)
 
       reponse = Client.get_cep_info(base_url, cep)
