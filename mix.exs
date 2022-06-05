@@ -58,7 +58,8 @@ defmodule Rocketlivery.MixProject do
       {:ex_machina, "~> 2.7.0", only: :test},
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.17"},
-      {:bypass, "~> 2.1", only: :test}
+      {:bypass, "~> 2.1", only: :test},
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 
