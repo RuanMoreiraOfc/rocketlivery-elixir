@@ -1,6 +1,9 @@
 defmodule Rocketlivery.Users.Update do
   alias Rocketlivery.Helpers.Error, as: ErrorHelper
+  alias Rocketlivery.Helpers.MergeChangeset, as: MergeChangesetHelper
+  alias Rocketlivery.Helpers.MockUserParams, as: MockUserParamsHelper
   alias Rocketlivery.{Repo, User}
+  alias Rocketlivery.ViaCep.{Client, Response}
 
   def call(%{"id" => id} = params) do
     case Repo.get(User, id) do
@@ -14,17 +17,38 @@ defmodule Rocketlivery.Users.Update do
   end
 
   defp do_update(user, params) do
-    user
-    |> User.changeset(params)
-    |> Repo.update()
-    |> handle_update_response()
+    new_changeset =
+      User.changeset(
+        user,
+        MockUserParamsHelper.call(params)
+      )
+
+    with(
+      {:ok, %User{cep: cep}} <- User.validate(new_changeset, :update),
+      {:ok, %Response{} = cep_info} <- update_cep_info(cep, user),
+      {:ok, _user} = result <-
+        new_changeset
+        |> MergeChangesetHelper.call(cep_info)
+        |> Repo.update()
+    ) do
+      result
+    else
+      {:error, %ErrorHelper{}} = error ->
+        error
+
+      {:error, reason} ->
+        reason
+        |> ErrorHelper.build_bad_request()
+        |> ErrorHelper.wrap()
+    end
   end
 
-  defp handle_update_response({:error, reason}) do
-    reason
-    |> ErrorHelper.build_bad_request()
-    |> ErrorHelper.wrap()
+  defp update_cep_info(cep, user) when user.cep != cep do
+    Client.get_cep_info(cep)
   end
 
-  defp handle_update_response({:ok, %User{}} = result), do: result
+  defp update_cep_info(_cep, user) do
+    result = Response.build(user.city, user.uf)
+    {:ok, result}
+  end
 end
