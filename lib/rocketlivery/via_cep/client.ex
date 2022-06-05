@@ -1,4 +1,6 @@
 defmodule Rocketlivery.ViaCep.Client do
+  @behaviour Rocketlivery.ViaCep.Behaviour
+
   use Tesla
 
   alias Rocketlivery.Helpers.Error
