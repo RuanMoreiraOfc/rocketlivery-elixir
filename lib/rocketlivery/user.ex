@@ -14,7 +14,9 @@ defmodule Rocketlivery.User do
     :age,
     :cpf,
     :address,
-    :cep
+    :cep,
+    :city,
+    :uf
   ]
   @required_params [:password] ++ @displayable_params
   @update_params [] ++ @displayable_params
