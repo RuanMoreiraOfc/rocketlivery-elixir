@@ -63,5 +63,33 @@ defmodule Rocketlivery.ViaCep.ClientTest do
 
       assert reponse == expect_response
     end
+
+    test "fails to return cep info when `cep` have not been found", %{
+      bypass: bypass,
+      base_url: base_url
+    } do
+      cep = "00000000"
+      expect_body = ~s({
+        "erro": "true"
+      })
+
+      expect_response = {
+        :error,
+        %ErrorHelper{
+          status: :not_found,
+          result: "CEP not found!"
+        }
+      }
+
+      Bypass.expect(bypass, "GET", "#{cep}/json/", fn conn ->
+        conn
+        |> Conn.put_resp_content_type("application/json")
+        |> Conn.resp(200, expect_body)
+      end)
+
+      reponse = Client.get_cep_info(base_url, cep)
+
+      assert reponse == expect_response
+    end
   end
 end
