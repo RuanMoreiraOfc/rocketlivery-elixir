@@ -51,6 +51,9 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Mocks
+config :rocketlivery, Rocketlivery.Users.Create, via_cep_adapter: Rocketlivery.ViaCep.Client
+
 # External Libs
 ## Tesla
 config :tesla, adapter: Tesla.Adapter.Hackney
