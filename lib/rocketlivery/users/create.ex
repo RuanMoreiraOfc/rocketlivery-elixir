@@ -1,19 +1,33 @@
 defmodule Rocketlivery.Users.Create do
   alias Rocketlivery.Helpers.Error, as: ErrorHelper
+  alias Rocketlivery.Helpers.MergeChangeset, as: MergeChangesetHelper
+  alias Rocketlivery.Helpers.MockUserParams, as: MockUserParamsHelper
   alias Rocketlivery.{Repo, User}
+  alias Rocketlivery.ViaCep.{Client, Response}
 
   def call(params) do
-    params
-    |> User.changeset()
-    |> Repo.insert()
-    |> handle_insert_response()
-  end
+    partial_changeset =
+      params
+      |> MockUserParamsHelper.call()
+      |> User.changeset()
 
-  defp handle_insert_response({:ok, %User{}} = result), do: result
+    with(
+      {:ok, %User{cep: cep}} <- User.validate(partial_changeset, :create),
+      {:ok, %Response{} = cep_info} <- Client.get_cep_info(cep),
+      {:ok, _user} = result <-
+        partial_changeset
+        |> MergeChangesetHelper.call(cep_info)
+        |> Repo.insert()
+    ) do
+      result
+    else
+      {:error, %ErrorHelper{}} = error ->
+        error
 
-  defp handle_insert_response({:error, result}) do
-    result
-    |> ErrorHelper.build_bad_request()
-    |> ErrorHelper.wrap()
+      {:error, reason} ->
+        reason
+        |> ErrorHelper.build_bad_request()
+        |> ErrorHelper.wrap()
+    end
   end
 end
