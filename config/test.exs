@@ -32,3 +32,6 @@ config :phoenix, :plug_init_mode, :runtime
 # External Libs
 ## Pbkdf2
 config :pbkdf2_elixir, :rounds, 1
+
+## Bypass
+config :bypass, enable_debug_log: true
