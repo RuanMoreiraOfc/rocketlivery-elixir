@@ -5,11 +5,14 @@ defmodule Rocketlivery.ViaCep.Client do
   alias Rocketlivery.ViaCep.Response
   alias Tesla.Env
 
-  plug Tesla.Middleware.BaseUrl, "https://viacep.com.br/ws"
+  @base_url "https://viacep.com.br/ws"
+
   plug Tesla.Middleware.JSON
 
-  def get_cep_info(cep) do
-    "#{cep}/json/"
+  def get_cep_info(base_url \\ @base_url, cep) do
+    fixed_base_url = Regex.replace(~r/\/$/, base_url, "")
+
+    "#{fixed_base_url}/#{cep}/json/"
     |> get()
     |> handle_get()
   end
