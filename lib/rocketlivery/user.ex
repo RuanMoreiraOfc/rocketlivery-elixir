@@ -31,6 +31,8 @@ defmodule Rocketlivery.User do
     field :cpf, :string
     field :address, :string
     field :cep, :string
+    field :city, :string
+    field :uf, :string
 
     timestamps()
   end
