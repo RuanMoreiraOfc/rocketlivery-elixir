@@ -39,6 +39,13 @@ defmodule Rocketlivery.User do
     timestamps()
   end
 
+  def validate(changeset, action) do
+    apply_action(
+      changeset,
+      action
+    )
+  end
+
   def changeset(params) do
     %__MODULE__{}
     |> build_changeset(params, @required_params)
