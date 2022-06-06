@@ -1,15 +1,23 @@
 defmodule Rocketlivery.Users.CreateTest do
   use Rocketlivery.DataCase, async: true
 
+  import Mox
   import Rocketlivery.Factory
 
   alias Rocketlivery.Helpers.Error
   alias Rocketlivery.User
   alias Rocketlivery.Users.Create
+  alias Rocketlivery.ViaCep.{ClientMock, Response}
 
   describe "call/1" do
     test "creates an user in database when all params are valid" do
       params = string_params_for(:user_params)
+
+      expect(ClientMock, :get_cep_info, fn _cep ->
+        response = struct!(Response, build(:user_cep_info))
+
+        {:ok, response}
+      end)
 
       response = Create.call(params)
 
