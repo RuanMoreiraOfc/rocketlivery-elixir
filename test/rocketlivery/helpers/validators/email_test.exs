@@ -1,5 +1,5 @@
 defmodule Rocketlivery.Helpers.Validators.EmailTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   alias Rocketlivery.Helpers.Validators.Email, as: EmailValidatorHelper
 
