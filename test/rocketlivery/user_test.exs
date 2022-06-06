@@ -6,9 +6,17 @@ defmodule Rocketlivery.UserTest do
   alias Ecto.Changeset
   alias Rocketlivery.User
 
+  defp build_user_params(opts \\ []) do
+    cep_info = string_params_for(:user_cep_info)
+
+    :user_params
+    |> string_params_for(opts)
+    |> Map.merge(cep_info)
+  end
+
   describe "changeset/1" do
     test "creates a changeset when all params are valid" do
-      params = string_params_for(:user_params)
+      params = build_user_params()
 
       response = User.changeset(params)
 
@@ -16,7 +24,7 @@ defmodule Rocketlivery.UserTest do
     end
 
     test "fails to create a changeset when email is in invalid format" do
-      params = string_params_for(:user_params, email: "invalid-email")
+      params = build_user_params(email: "invalid-email")
 
       expected_response = %{email: ["has invalid format"]}
 
@@ -27,8 +35,7 @@ defmodule Rocketlivery.UserTest do
 
     test "fails to create a changeset when all parmas are invalid" do
       params =
-        string_params_for(
-          :user_params,
+        build_user_params(
           email: "#{String.duplicate("3", 320 - 63 + 1)}@#{String.duplicate("2", 63 - 4)}.111",
           password: "123",
           name: nil,
@@ -56,7 +63,7 @@ defmodule Rocketlivery.UserTest do
 
   describe "changeset/2" do
     test "updates a existing changeset when new params are valid" do
-      params = string_params_for(:user_params)
+      params = build_user_params()
 
       new_params = %{
         "name" => "Not Anny One"
@@ -70,7 +77,7 @@ defmodule Rocketlivery.UserTest do
     end
 
     test "fails to update a changeset when cpf is invalid" do
-      params = string_params_for(:user_params)
+      params = build_user_params()
 
       new_params = %{
         "cpf" => "1234567890"
@@ -86,7 +93,7 @@ defmodule Rocketlivery.UserTest do
     end
 
     test "updates the password from a existing changeset when new password is valid" do
-      params = string_params_for(:user_params)
+      params = build_user_params()
 
       new_params = %{
         # From web always come as `key => value` notation
@@ -105,7 +112,7 @@ defmodule Rocketlivery.UserTest do
     end
 
     test "fails to update a existing changeset when all new params are invalid" do
-      params = string_params_for(:user_params)
+      params = build_user_params()
 
       # From web always come as `key => value` notation
       new_params = %{
