@@ -2,6 +2,7 @@ defmodule Rocketlivery.Factory do
   use ExMachina.Ecto, repo: Rocketlivery.Repo
 
   alias Rocketlivery.{Item, Order, User}
+  alias Rocketlivery.ViaCep.Response
 
   def user_params_factory do
     %{
@@ -13,6 +14,15 @@ defmodule Rocketlivery.Factory do
       cpf: "12345678900",
       cep: "05030030"
     }
+  end
+
+  def user_cep_info_factory do
+    cep_info = %Response{
+      city: "São Paulo",
+      uf: "SP"
+    }
+
+    Map.from_struct(cep_info)
   end
 
   def user_factory do
