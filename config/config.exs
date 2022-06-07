@@ -58,6 +58,11 @@ config :rocketlivery, Rocketlivery.Users.Create, via_cep_adapter: Rocketlivery.V
 ## Tesla
 config :tesla, adapter: Tesla.Adapter.Hackney
 
+## Guardian
+config :rocketlivery, RocketliveryWeb.Auth.Pipeline,
+  module: RocketliveryWeb.Auth.Guardian,
+  error_handler: RocketliveryWeb.Auth.ErrorHandler
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 
