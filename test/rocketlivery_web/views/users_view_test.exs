@@ -5,15 +5,19 @@ defmodule RocketliveryWeb.UsersViewTest do
   import Rocketlivery.Factory
 
   alias Rocketlivery.User
+  alias RocketliveryWeb.Auth.Guardian
   alias RocketliveryWeb.UsersView
 
   test "renders create.json" do
     user = build(:user)
 
-    response = render(UsersView, "create.json", user: user)
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+    response = render(UsersView, "create.json", user: user, token: token)
 
     assert %{
              message: "User created!",
+             token: ^token,
              user: %User{
                id: "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3",
                email: "anyone@email.com",
