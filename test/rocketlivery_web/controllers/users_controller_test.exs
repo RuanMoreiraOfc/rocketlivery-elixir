@@ -95,6 +95,19 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"message" => "unauthenticated"} = response
     end
+
+    test "fails to delete the user via `conn` when request is unauthenticated and id not exists",
+         %{
+           non_existing_id: non_existing_id,
+           unauthenticated_conn: unauthenticated_conn
+         } do
+      response =
+        unauthenticated_conn
+        |> delete(Routes.users_path(unauthenticated_conn, :delete, non_existing_id))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "unauthenticated"} = response
+    end
   end
 
   describe "show/2" do
@@ -131,6 +144,19 @@ defmodule RocketliveryWeb.UsersControllerTest do
       response =
         unauthenticated_conn
         |> get(Routes.users_path(unauthenticated_conn, :show, existing_id))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "unauthenticated"} = response
+    end
+
+    test "fails to show the user via `conn` when request is unauthenticated and id not exists",
+         %{
+           non_existing_id: non_existing_id,
+           unauthenticated_conn: unauthenticated_conn
+         } do
+      response =
+        unauthenticated_conn
+        |> get(Routes.users_path(unauthenticated_conn, :show, non_existing_id))
         |> json_response(:unauthorized)
 
       assert %{"message" => "unauthenticated"} = response
@@ -183,6 +209,23 @@ defmodule RocketliveryWeb.UsersControllerTest do
       response =
         unauthenticated_conn
         |> put(Routes.users_path(unauthenticated_conn, :update, existing_id, new_params))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "unauthenticated"} = response
+    end
+
+    test "fails to update the user via `conn` when request is unauthenticated and id not exists",
+         %{
+           non_existing_id: non_existing_id,
+           unauthenticated_conn: unauthenticated_conn
+         } do
+      new_params = %{
+        "age" => 84
+      }
+
+      response =
+        unauthenticated_conn
+        |> put(Routes.users_path(unauthenticated_conn, :update, non_existing_id, new_params))
         |> json_response(:unauthorized)
 
       assert %{"message" => "unauthenticated"} = response
