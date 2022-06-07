@@ -60,4 +60,12 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+
 import_config "#{config_env()}.exs"
+import_config_secrets = fn file -> if File.exists?("config/#{file}"), do: import_config(file) end
+
+"config.secrets.exs"
+|> import_config_secrets.()
+
+"#{config_env()}.secrets.exs"
+|> import_config_secrets.()
