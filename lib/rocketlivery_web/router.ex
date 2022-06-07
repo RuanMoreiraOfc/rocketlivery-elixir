@@ -1,6 +1,7 @@
 defmodule RocketliveryWeb.Router do
   use RocketliveryWeb, :router
 
+  alias RocketliveryWeb.Auth.Pipeline, as: AuthPipeline
   alias RocketliveryWeb.Plugs.UUIDChecker
 
   pipeline :api do
@@ -8,13 +9,23 @@ defmodule RocketliveryWeb.Router do
     plug UUIDChecker
   end
 
+  pipeline :auth do
+    plug AuthPipeline
+  end
+
   scope "/api", RocketliveryWeb do
     pipe_through :api
 
-    resources "/users", UsersController, except: [:new, :edit]
+    post "/users", UsersController, :create
     post "/users/signin", UsersController, :sign_in
     resources "/items", ItemsController, except: [:new, :edit]
     resources "/orders", OrdersController, except: [:new, :edit]
+  end
+
+  scope "/api", RocketliveryWeb do
+    pipe_through [:api, :auth]
+
+    resources "/users", UsersController, except: [:new, :edit, :create]
   end
 
   # Enables LiveDashboard only for development
