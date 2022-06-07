@@ -17,6 +17,8 @@ defmodule RocketliveryWeb do
   and import those modules here.
   """
 
+  alias RocketliveryWeb.Auth.Guardian
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: RocketliveryWeb
@@ -75,4 +77,8 @@ defmodule RocketliveryWeb do
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
+
+  # ***
+
+  defdelegate authenticate(params), to: Guardian, as: :authenticate
 end
