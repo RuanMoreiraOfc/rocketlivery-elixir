@@ -83,6 +83,18 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"message" => "User not found!"} = response
     end
+
+    test "fails to delete the user via `conn` when request is unauthenticated", %{
+      existing_id: existing_id,
+      unauthenticated_conn: unauthenticated_conn
+    } do
+      response =
+        unauthenticated_conn
+        |> delete(Routes.users_path(unauthenticated_conn, :delete, existing_id))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "unauthenticated"} = response
+    end
   end
 
   describe "show/2" do
@@ -110,6 +122,18 @@ defmodule RocketliveryWeb.UsersControllerTest do
         |> json_response(:not_found)
 
       assert %{"message" => "User not found!"} = response
+    end
+
+    test "fails to show the user via `conn` when request is unauthenticated", %{
+      existing_id: existing_id,
+      unauthenticated_conn: unauthenticated_conn
+    } do
+      response =
+        unauthenticated_conn
+        |> get(Routes.users_path(unauthenticated_conn, :show, existing_id))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "unauthenticated"} = response
     end
   end
 
@@ -146,6 +170,22 @@ defmodule RocketliveryWeb.UsersControllerTest do
         |> json_response(:not_found)
 
       assert %{"message" => "User not found!"} = response
+    end
+
+    test "fails to update the user via `conn` when request is unauthenticated", %{
+      existing_id: existing_id,
+      unauthenticated_conn: unauthenticated_conn
+    } do
+      new_params = %{
+        "age" => 84
+      }
+
+      response =
+        unauthenticated_conn
+        |> put(Routes.users_path(unauthenticated_conn, :update, existing_id, new_params))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "unauthenticated"} = response
     end
   end
 end
