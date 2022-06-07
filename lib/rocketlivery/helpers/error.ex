@@ -29,6 +29,11 @@ defmodule Rocketlivery.Helpers.Error do
     |> build(result)
   end
 
+  def build_unauthorized(result) do
+    :unauthorized
+    |> build(result)
+  end
+
   def build_user_not_found_error do
     "User not found!"
     |> build_not_found()
