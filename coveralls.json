@@ -4,6 +4,7 @@
     "lib/rocketlivery/application.ex",
     "lib/rocketlivery/mailer.ex",
     "lib/rocketlivery/repo.ex",
+    "lib/rocketlivery/orders/report/runner.ex",
     "lib/rocketlivery_web.ex",
     "lib/rocketlivery_web/views/error_helpers.ex",
     "lib/rocketlivery_web/telemetry.ex",
