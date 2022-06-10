@@ -25,6 +25,13 @@ defmodule Rocketlivery.Factory do
     Map.from_struct(cep_info)
   end
 
+  def user_sign_in_params_factory do
+    %{
+      id: insert(:user).id,
+      password: "12345678"
+    }
+  end
+
   def user_factory do
     %User{
       id: "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3",
