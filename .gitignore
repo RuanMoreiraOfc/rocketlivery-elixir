@@ -34,3 +34,6 @@ npm-debug.log
 
 # Secrets
 *.secrets.exs
+
+# Reports
+*.csv
