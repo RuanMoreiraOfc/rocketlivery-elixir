@@ -30,6 +30,7 @@ defmodule Rocketlivery.Factory do
       id: "b815baa2-f7a4-4eeb-ad2b-2790d48cbbf3",
       email: "anyone@email.com",
       password: "12345678",
+      password_hash: Pbkdf2.add_hash("12345678").password_hash,
       address: "St Anywhere",
       name: "Anny One",
       age: 24,
