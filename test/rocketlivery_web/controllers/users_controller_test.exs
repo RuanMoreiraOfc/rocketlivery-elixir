@@ -171,6 +171,17 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"message" => "User not found!"} = response
     end
+
+    test "fails to signs in the user via `conn` when password is wrong", %{conn: conn} do
+      params = string_params_for(:user_sign_in_params, password: "87654321")
+
+      response =
+        conn
+        |> post(Routes.users_path(conn, :sign_in, params))
+        |> json_response(:unauthorized)
+
+      assert %{"message" => "Please verify your credentials!"} = response
+    end
   end
 
   describe "update/2" do
