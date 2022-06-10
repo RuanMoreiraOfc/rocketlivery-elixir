@@ -16,18 +16,18 @@ defmodule Rocketlivery.Orders.Update do
     end
   end
 
-  defp do_update(oldOrder, params) do
+  defp do_update(old_order, params) do
     params
     |> ParseItemsParamsHelper.call()
-    |> handle_update(oldOrder, params)
+    |> handle_update(old_order, params)
     |> handle_update_response
   end
 
-  defp handle_update({:error, _reason} = result, _oldOrder, _params), do: result
+  defp handle_update({:error, _reason} = result, _old_order, _params), do: result
 
-  defp handle_update({:ok, items}, oldOrder, params) do
+  defp handle_update({:ok, items}, old_order, params) do
     clean_update_result =
-      oldOrder
+      old_order
       |> Order.changeset(params, [])
       # IT HAS NO UNIQUE ID PER LINE, WHEN TRY TO UPDATE IT FAILS, SO CLEAR IT FIRST
       |> Repo.update()

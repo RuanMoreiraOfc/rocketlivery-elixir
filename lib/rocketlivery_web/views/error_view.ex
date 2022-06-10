@@ -40,13 +40,13 @@ defmodule RocketliveryWeb.ErrorView do
             type: {
               :parameterized,
               Ecto.Enum,
-              %{mappings: optionsTupleList}
+              %{mappings: options_tuple_list}
             },
             validation: :cast
           ]} = error
        ) do
     core_msg = get_core_msg(error)
-    valid_options = Enum.map_join(optionsTupleList, ", ", &"'#{elem(&1, 1)}'")
+    valid_options = Enum.map_join(options_tuple_list, ", ", &"'#{elem(&1, 1)}'")
 
     "#{core_msg}, valid options are: [#{valid_options}]"
   end
