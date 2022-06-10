@@ -163,6 +163,19 @@ defmodule RocketliveryWeb.UsersControllerTest do
     end
   end
 
+  describe "sign_in/2" do
+    test "signs in the user via `conn` when id has been found", %{conn: conn} do
+      params = string_params_for(:user_sign_in_params)
+
+      response =
+        conn
+        |> post(Routes.users_path(conn, :sign_in, params))
+        |> json_response(:ok)
+
+      assert %{"token" => _token} = response
+    end
+  end
+
   describe "update/2" do
     setup [:setup_authenticated_route]
 
