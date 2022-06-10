@@ -32,6 +32,14 @@ defmodule RocketliveryWeb.UsersViewTest do
            } = response
   end
 
+  test "renders sign_in.json" do
+    token = "123456789"
+
+    response = render(UsersView, "sign_in.json", token: token)
+
+    assert %{token: "123456789"} = response
+  end
+
   test "renders user.json" do
     user = build(:user, age: 19)
 
