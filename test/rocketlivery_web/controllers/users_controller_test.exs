@@ -182,6 +182,20 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"message" => "Please verify your credentials!"} = response
     end
+
+    test "fails to signs in the user via `conn` when any param is missing", %{conn: conn} do
+      params =
+        :user_sign_in_params
+        |> string_params_for()
+        |> Map.drop(["id"])
+
+      response =
+        conn
+        |> post(Routes.users_path(conn, :sign_in, params))
+        |> json_response(:bad_request)
+
+      assert %{"message" => "Invalid or missing params"} = response
+    end
   end
 
   describe "update/2" do
