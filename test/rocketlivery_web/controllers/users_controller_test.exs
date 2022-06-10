@@ -160,6 +160,17 @@ defmodule RocketliveryWeb.UsersControllerTest do
 
       assert %{"token" => _token} = response
     end
+
+    test "fails to signs in the user via `conn` when id has not been found", %{conn: conn} do
+      params = string_params_for(:user_sign_in_params, id: @non_existing_id)
+
+      response =
+        conn
+        |> post(Routes.users_path(conn, :sign_in, params))
+        |> json_response(:not_found)
+
+      assert %{"message" => "User not found!"} = response
+    end
   end
 
   describe "update/2" do
