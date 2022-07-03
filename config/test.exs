@@ -31,6 +31,7 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Mocks
 config :rocketlivery, Rocketlivery.Users.Create, via_cep_adapter: Rocketlivery.ViaCep.ClientMock
+config :rocketlivery, Rocketlivery.Users.Update, via_cep_adapter: Rocketlivery.ViaCep.ClientMock
 
 # External Libs
 ## Pbkdf2

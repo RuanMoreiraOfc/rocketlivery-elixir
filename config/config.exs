@@ -53,6 +53,7 @@ config :phoenix, :json_library, Jason
 
 # Mocks
 config :rocketlivery, Rocketlivery.Users.Create, via_cep_adapter: Rocketlivery.ViaCep.Client
+config :rocketlivery, Rocketlivery.Users.Update, via_cep_adapter: Rocketlivery.ViaCep.Client
 
 # External Libs
 ## Tesla
