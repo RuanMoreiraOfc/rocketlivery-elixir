@@ -4,7 +4,7 @@ defmodule Rocketlivery.Users.UpdateTest do
   import Rocketlivery.Factory
 
   alias Ecto.Changeset
-  alias Rocketlivery.Helpers.Error
+  alias Rocketlivery.Helpers.Error, as: ErrorHelper
   alias Rocketlivery.User
   alias Rocketlivery.Users.Update
 
@@ -25,7 +25,7 @@ defmodule Rocketlivery.Users.UpdateTest do
       response = Update.call(new_params)
 
       assert {:error,
-              %Error{
+              %ErrorHelper{
                 status: :bad_request,
                 result: %Changeset{errors: _errors}
               }} = response
@@ -38,7 +38,7 @@ defmodule Rocketlivery.Users.UpdateTest do
 
       response = Update.call(new_params)
 
-      assert {:error, %Error{status: :not_found, result: _result}} = response
+      assert {:error, %ErrorHelper{status: :not_found, result: _result}} = response
     end
   end
 end

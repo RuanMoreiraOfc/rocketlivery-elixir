@@ -4,7 +4,7 @@ defmodule Rocketlivery.Users.CreateTest do
   import Mox
   import Rocketlivery.Factory
 
-  alias Rocketlivery.Helpers.Error
+  alias Rocketlivery.Helpers.Error, as: ErrorHelper
   alias Rocketlivery.User
   alias Rocketlivery.Users.Create
   alias Rocketlivery.ViaCep.{ClientMock, Response}
@@ -29,7 +29,7 @@ defmodule Rocketlivery.Users.CreateTest do
 
       response = Create.call(params)
 
-      assert {:error, %Error{status: :bad_request, result: _result}} = response
+      assert {:error, %ErrorHelper{status: :bad_request, result: _result}} = response
     end
   end
 end
