@@ -23,5 +23,21 @@ defmodule Rocketlivery.Orders.CreateTest do
 
       assert {:error, %Error{status: :bad_request, result: _result}} = response
     end
+
+    test "fails to create an order in database when any id in list items is invalid" do
+      params =
+        string_params_for(:order_params,
+          items: [
+            %{
+              id: "00000000-0000-0000-0000-000000000000",
+              quantity: 1
+            }
+          ]
+        )
+
+      response = Create.call(params)
+
+      assert {:error, %Error{status: :bad_request, result: _result}} = response
+    end
   end
 end
