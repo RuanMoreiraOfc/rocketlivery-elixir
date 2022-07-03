@@ -31,5 +31,27 @@ defmodule Rocketlivery.Users.CreateTest do
 
       assert {:error, %ErrorHelper{status: :bad_request, result: _result}} = response
     end
+
+    test "fails to create an user in database when cep is invalid" do
+      params = string_params_for(:user_params, cep: "00000000")
+
+      expected_response = {
+        :error,
+        %ErrorHelper{
+          status: :not_found,
+          result: %{
+            message: "CEP not found!"
+          }
+        }
+      }
+
+      expect(ClientMock, :get_cep_info, fn _cep ->
+        expected_response
+      end)
+
+      response = Create.call(params)
+
+      assert ^expected_response = response
+    end
   end
 end
