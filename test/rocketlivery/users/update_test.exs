@@ -1,12 +1,14 @@
 defmodule Rocketlivery.Users.UpdateTest do
   use Rocketlivery.DataCase, async: true
 
+  import Mox
   import Rocketlivery.Factory
 
   alias Ecto.Changeset
   alias Rocketlivery.Helpers.Error, as: ErrorHelper
   alias Rocketlivery.User
   alias Rocketlivery.Users.Update
+  alias Rocketlivery.ViaCep.ClientMock
 
   describe "call/1" do
     test "updates an user in database when all params are valid" do
@@ -39,6 +41,29 @@ defmodule Rocketlivery.Users.UpdateTest do
       response = Update.call(new_params)
 
       assert {:error, %ErrorHelper{status: :not_found, result: _result}} = response
+    end
+
+    test "fails to update an user in database when cep is invalid" do
+      %{id: id} = insert(:user)
+      new_params = %{"id" => id, "cep" => "00000000"}
+
+      expected_response = {
+        :error,
+        %ErrorHelper{
+          status: :not_found,
+          result: %{
+            message: "CEP not found!"
+          }
+        }
+      }
+
+      expect(ClientMock, :get_cep_info, fn _cep ->
+        expected_response
+      end)
+
+      response = Update.call(new_params)
+
+      assert ^expected_response = response
     end
   end
 end
