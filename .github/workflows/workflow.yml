@@ -97,6 +97,8 @@ jobs:
 
       - name: "Commit Secrets Secretly 🤫"
         run: |
+          git config --global user.email "deploy@github.actions"
+          git config --global user.name "Github Actions"
           git add .
           git commit -m "deploy: setup secret"
 
