@@ -102,7 +102,6 @@ jobs:
       - uses: mhanberg/gigalixir-action@v0.4.0
         with:
           GIGALIXIR_APP: rocketlivery
-          GIGALIXIR_CLEAN: true
           GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
           GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
