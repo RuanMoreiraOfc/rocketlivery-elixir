@@ -16,6 +16,13 @@ Rocketlivery
 
 <div align="center">
 
+[![card-build]][btn-goto-build]
+[![card-codecov]][btn-goto-codecov]
+
+</div>
+
+<div align="center">
+
 [![card-languages]][btn-null]
 [![card-last-commit]][btn-null]
 [![card-repo-size]][btn-goto-clone]
@@ -187,6 +194,8 @@ Made with :heart: by Ruan Moreira de Jesus!
 
 <!-- *** INFO CARDS *** -->
 
+[card-build]: https://github.com/ruanmoreiraofc/rocketlivery-elixir/actions/workflows/workflow.yml/badge.svg
+[card-codecov]: https://codecov.io/gh/ruanmoreiraofc/rocketlivery-elixir/branch/main/graph/badge.svg?token=XH26MD5DBE
 [card-languages]: https://img.shields.io/github/languages/count/ruanmoreiraofc/rocketlivery-elixir?style=for-the-badge&label=Languages
 [card-last-commit]: https://img.shields.io/github/last-commit/ruanmoreiraofc/rocketlivery-elixir?style=for-the-badge&label=Last%20Commit
 [card-repo-size]: https://img.shields.io/github/repo-size/ruanmoreiraofc/rocketlivery-elixir?style=for-the-badge&label=Repo%20Size
@@ -200,15 +209,26 @@ Made with :heart: by Ruan Moreira de Jesus!
 [btn-git]: https://git-scm.com
 [btn-elixir]: https://elixir-lang.org/install.html
 [btn-vscode]: https://code.visualstudio.com
+[btn-license]: LICENSE
+
+<!-- CARDS -->
+
+[btn-goto-build]: https://github.com/ruanmoreiraofc/rocketlivery-elixir/actions/workflows/workflow.yml
+[btn-goto-codecov]: https://codecov.io/gh/RuanMoreiraOfc/rocketlivery-elixir
 [btn-goto-clone]: #id-clone
 [btn-goto-license]: #id-license
 [btn-goto-issues]: https://github.com/ruanmoreiraofc/rocketlivery-elixir/issues?q=is%3Aopen
+
+<!-- DO IT BY YOURSELF -->
+
 [btn-localhost]: http://localhost:4000
+
+<!-- EXAMPLES -->
+
 [btn-example-config-dev]: ./config/dev.exs
 [btn-example-config-secrets]: ./config/config.secrets.example
 [btn-example-config-test]: ./config/test.exs
 [btn-example-insomnia]: insomnia.json
-[btn-license]: LICENSE
 
 <!-- *** TECHNOLOGY *** -->
 
