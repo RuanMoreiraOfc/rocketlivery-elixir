@@ -18,7 +18,8 @@ defmodule Rocketlivery.Application do
       RocketliveryWeb.Endpoint,
       # Start a worker by calling: Rocketlivery.Worker.start_link(arg)
       # {Rocketlivery.Worker, arg}
-      {Rocketlivery.Orders.Report.Runner, [env: Mix.env()]}
+      {Rocketlivery.Orders.Report.Runner,
+       [env: String.to_atom(System.get_env("MIX_ENV") || "unknown")]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
