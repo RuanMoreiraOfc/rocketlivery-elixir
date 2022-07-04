@@ -95,6 +95,11 @@ jobs:
         env:
           GUARDIAN_SECRET: ${{ secrets.GUARDIAN_SECRET }}
 
+      - name: "Commit Secrets Secretly 🤫"
+        run: |
+          git add .
+          git commit -m "deploy: setup secret"
+
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8.1
