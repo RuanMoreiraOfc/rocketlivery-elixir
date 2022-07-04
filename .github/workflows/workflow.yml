@@ -38,8 +38,8 @@ jobs:
       - name: Set up Elixir 🔌
         uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
         with:
-          elixir-version: "1.13.4"
-          otp-version: "25.0.1"
+          elixir-version: "1.13"
+          otp-version: "23.3.2"
 
       - name: Restore Dependencies Cache 🤳
         id: mix_cache_step
