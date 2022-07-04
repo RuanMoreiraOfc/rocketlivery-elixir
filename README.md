@@ -53,6 +53,8 @@ It was used on development:
 - [Mox]
 - [Guardian]
 
+## [:eyes: Preview][btn-preview] <span id="id-preview"/>
+
 ## :electric_plug: Requirements <span id="id-clone"/>
 
 Before to start, you will need have installed on your computer these programs:
@@ -210,6 +212,7 @@ Made with :heart: by Ruan Moreira de Jesus!
 [btn-elixir]: https://elixir-lang.org/install.html
 [btn-vscode]: https://code.visualstudio.com
 [btn-license]: LICENSE
+[btn-preview]: https://rocketlivery.gigalixirapp.com/api/
 
 <!-- CARDS -->
 
