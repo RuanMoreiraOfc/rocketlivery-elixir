@@ -99,7 +99,7 @@ jobs:
         run: |
           git config --global user.email "deploy@github.actions"
           git config --global user.name "Github Actions"
-          git add .
+          git add config/* -f
           git commit -m "deploy: setup secret"
 
       - uses: actions/setup-python@v2
