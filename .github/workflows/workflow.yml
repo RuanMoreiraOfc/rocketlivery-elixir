@@ -75,3 +75,34 @@ jobs:
         run: bash <(curl -s https://codecov.io/bash)
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+
+    name: Deploy Gigalixir 🚀
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 👀
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: "Setup Secrets 🕵️‍♂️"
+        run: bash .github/scripts/setup_secret.sh
+        env:
+          GUARDIAN_SECRET: ${{ secrets.GUARDIAN_SECRET }}
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.1
+
+      - uses: mhanberg/gigalixir-action@v0.4.0
+        with:
+          GIGALIXIR_APP: rocketlivery
+          GIGALIXIR_CLEAN: true
+          GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
+          GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
