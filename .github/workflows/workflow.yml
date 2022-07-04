@@ -72,6 +72,6 @@ jobs:
           MIX_ENV: test
 
       - name: Run Codecov Script
-        run: curl -Os https://uploader.codecov.io/latest/linux/codecov chmod +x codecov ./codecov
+        run: curl -Os https://uploader.codecov.io/latest/linux/codecov chmod +x codecov ./cover
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
