@@ -36,7 +36,7 @@ Rocketlivery
 
 **Rocketlivery** is a complex application delivery application, with a report generator for the orders done with cron jobs.
 
-Project made on Ignite with **[Rafael Camada][btn-tutor]** at Elixir Journey.
+Project made on Ignite with **[Rafael Camarda][btn-tutor]** at Elixir Journey.
 
 ## :triangular_ruler: Technology <span id="id-about"/>
 
