@@ -1,0 +1,77 @@
+name: CI/CD
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and Test 🔨
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:14.3
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout 👀
+        uses: actions/checkout@v3
+
+      - name: "Setup Secrets 🕵️‍♂️"
+        run: bash .github/scripts/setup_secret.sh
+        env:
+          GUARDIAN_SECRET: ${{ secrets.GUARDIAN_SECRET }}
+
+      - name: Set up Elixir 🔌
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: "1.13.4"
+          otp-version: "25.0.1"
+
+      - name: Restore Dependencies Cache 🤳
+        id: mix_cache_step
+        uses: actions/cache@v3
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      - name: Install Dependencies 🏋️‍♂️
+        if: steps.mix_cache_step.outputs.cache-hit != 'true'
+        run: mix deps.get
+
+      - name: Check Formatting 🔍
+        run: mix format --check-formatted
+
+      - name: Compile 🏗
+        run: mix compile
+        env:
+          MIX_ENV: test
+
+      - name: Run Credo 🤵
+        run: mix credo --strict
+        env:
+          MIX_ENV: test
+
+      - name: Check Coverage 🧪
+        run: mix coveralls.json
+        env:
+          MIX_ENV: test
+
+      - name: Run Codecov Script
+        run: curl -Os https://uploader.codecov.io/latest/linux/codecov chmod +x codecov ./codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
