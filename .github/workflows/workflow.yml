@@ -104,4 +104,5 @@ jobs:
           GIGALIXIR_APP: rocketlivery
           GIGALIXIR_USERNAME: ${{ secrets.GIGALIXIR_USERNAME }}
           GIGALIXIR_PASSWORD: ${{ secrets.GIGALIXIR_PASSWORD }}
+          MIGRATIONS: false
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
