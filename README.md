@@ -111,13 +111,8 @@ In order to generate bearer tokens for your api, you need setup [`./config/confi
 **(ONLY ON `bash`)** you can paste this command to help you out
 
 ```bash
-GUARDIAN_SECRET=$(mix guardian.gen.secret); \
-cp config/config.secrets.example config/.t; \
-sed -i 's|my_app_name|rocketlivery|g' config/.t; \
-sed -i 's|my_module_using_guardian|RocketliveryWeb.Auth.Guardian|' config/.t; \
-sed -i "s|secret_key: \".*\"|secret_key: \"$GUARDIAN_SECRET\"|" config/.t; \
-mv config/.t config/config.secrets.exs;
-echo "END"
+GUARDIAN_SECRET=$(mix guardian.gen.secret) \
+bash .github/scripts/setup_secret.sh
 ```
 
 ### Usage
