@@ -176,6 +176,7 @@ Made with :heart: by Ruan Moreira de Jesus!
   ***---- VARIABLES ----***
 -->
 
+[allowed_in_portfolio]: true
 [btn-null]: #
 
 <!-- *** AUTHOR *** -->
