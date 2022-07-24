@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    if: "!startsWith(github.event.head_commit.message, 'docs:') && !contains(github.event.head_commit.message, '/skip:')"
+    if: true && !startsWith(github.event.head_commit.message, 'docs:') && !contains(github.event.head_commit.message, '/skip:')
     name: Build and Test 🔨
     runs-on: ubuntu-latest
 
@@ -79,8 +79,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'
-    if: "!startsWith(github.event.head_commit.message, 'docs:') && !contains(github.event.head_commit.message, '/skip:')"
+    if: github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, 'docs:') && !contains(github.event.head_commit.message, '/skip:')
 
     name: Deploy Gigalixir 🚀
     runs-on: ubuntu-latest
